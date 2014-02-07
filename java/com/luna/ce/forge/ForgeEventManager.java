@@ -1,0 +1,73 @@
+package com.luna.ce.forge;
+
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.ServerChatEvent;
+
+import org.lwjgl.input.Keyboard;
+
+import com.luna.ce.log.CELogger;
+import com.luna.ce.manager.ManagerCommand;
+import com.luna.ce.manager.ManagerModule;
+import com.luna.ce.module.Module;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
+
+public class ForgeEventManager {
+	private final boolean[ ]	keyStates	= new boolean[ 256 ];
+	
+	public ForgeEventManager( ) {
+		CELogger.getInstance( ).log( "Setting up Forge event stuff..." );
+	}
+	
+	@SubscribeEvent
+	public void onServerTick( final TickEvent.ServerTickEvent ev ) {
+		if( Minecraft.getMinecraft( ).theWorld != null ) {
+			for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
+				if( e.getActive( ) ) {
+					e.onWorldTick( );
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onWorldRender( final RenderWorldLastEvent ev ) {
+		if( Minecraft.getMinecraft( ).theWorld != null ) {
+			for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
+				if( e.getActive( ) ) {
+					e.onWorldRender( );
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onClientTick( final TickEvent.ClientTickEvent ev ) {
+		if( Minecraft.getMinecraft( ).theWorld != null ) {
+			for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
+				if( checkKey( e.getKey( ) ) ) {
+					e.toggle( );
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onChatSend( final ServerChatEvent ev ) {
+		ManagerCommand.getInstance( ).parseCommands( ev );
+	}
+	
+	private boolean checkKey( final int key ) {
+		if( Minecraft.getMinecraft( ).currentScreen != null ) {
+			return false;
+		}
+		
+		if( Keyboard.isKeyDown( key ) != keyStates[ key ] ) {
+			return keyStates[ key ] = !keyStates[ key ];
+		} else {
+			return false;
+		}
+	}
+}
