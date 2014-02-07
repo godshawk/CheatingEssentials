@@ -7,9 +7,9 @@ import net.minecraft.entity.projectile.EntityArrow;
 
 import com.luna.ce.module.EnumModuleType;
 import com.luna.ce.module.Module;
-import com.luna.lib.annotations.Loadable;
 
-@Loadable
+//@Loadable
+// Doesn't work, find a better way.
 public class ModuleAntiArrow extends Module {
 	
 	public ModuleAntiArrow( ) {
@@ -30,8 +30,9 @@ public class ModuleAntiArrow extends Module {
 			if( e instanceof EntityArrow ) {
 				final EntityArrow a = ( EntityArrow ) e;
 				if( !a.shootingEntity.equals( getPlayer( ) ) ) {
-					if( getPlayer( ).getDistanceToEntity( a ) <= 5.0F ) {
+					if( getPlayer( ).getDistanceSqToEntity( a ) <= 5.0F ) {
 						getWorld( ).removeEntity( a );
+						getWorld( ).removeEntityFromWorld( a.getEntityId( ) );
 					}
 				}
 			}

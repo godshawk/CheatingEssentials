@@ -33,7 +33,7 @@ public class ModuleMobESP extends Module {
 					( e.posZ + halfWidth ) - RenderManager.renderPosZ );
 			
 			if( ( e instanceof EntityMob ) ) {
-				GLHelper.drawESP( bb, 0.1, 0.7, 0.1 );
+				GLHelper.drawESP( bb, 0.7, 0.1, 0.1 );
 			}
 			
 			if( ( e instanceof EntitySlime ) ) {

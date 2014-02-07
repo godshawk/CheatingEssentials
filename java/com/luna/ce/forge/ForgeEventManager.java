@@ -10,6 +10,7 @@ import com.luna.ce.log.CELogger;
 import com.luna.ce.manager.ManagerCommand;
 import com.luna.ce.manager.ManagerModule;
 import com.luna.ce.module.Module;
+import com.luna.lib.loggers.enums.EnumLogType;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -48,7 +49,10 @@ public class ForgeEventManager {
 		if( Minecraft.getMinecraft( ).theWorld != null ) {
 			for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
 				if( checkKey( e.getKey( ) ) ) {
+					CELogger.getInstance( ).log( EnumLogType.DEBUG,
+							"Found Module " + e.getName( ) + " for key " + e.getKey( ) );
 					e.toggle( );
+					return;
 				}
 			}
 		}
@@ -64,9 +68,19 @@ public class ForgeEventManager {
 			return false;
 		}
 		
-		if( Keyboard.isKeyDown( key ) != keyStates[ key ] ) {
-			return keyStates[ key ] = !keyStates[ key ];
-		} else {
+		try {
+			if( Keyboard.getEventKey( ) > -1 ) {
+				if( Keyboard.isKeyDown( key ) != keyStates[ key ] ) {
+					return keyStates[ key ] = !keyStates[ key ];
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch( final IndexOutOfBoundsException e ) {
+			// Don't understand why this happens, but it does. =|
+			// e.printStackTrace( );
 			return false;
 		}
 	}

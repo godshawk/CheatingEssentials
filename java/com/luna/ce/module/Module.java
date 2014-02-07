@@ -3,6 +3,9 @@ package com.luna.ce.module;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ChatComponentText;
 
 import com.luna.ce.CheatingEssentials;
@@ -37,6 +40,9 @@ public abstract class Module implements Command {
 		this.author = author;
 		this.key = key;
 		this.type = type;
+		help = new String[ ] {
+			desc
+		};
 	}
 	
 	public abstract void onWorldRender( );
@@ -117,6 +123,18 @@ public abstract class Module implements Command {
 	
 	protected WorldClient getWorld( ) {
 		return getMinecraft( ).theWorld;
+	}
+	
+	protected GameSettings getGameSettings( ) {
+		return getMinecraft( ).gameSettings;
+	}
+	
+	protected RenderGlobal getRenderGlobal( ) {
+		return getMinecraft( ).renderGlobal;
+	}
+	
+	protected EntityRenderer getEntityRenderer( ) {
+		return getMinecraft( ).entityRenderer;
 	}
 	
 	protected void addChatMessage( final String text ) {
