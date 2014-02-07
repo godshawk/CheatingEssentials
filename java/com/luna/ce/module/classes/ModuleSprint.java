@@ -30,11 +30,15 @@ public class ModuleSprint extends Module {
 	}
 	
 	private boolean canSprint( ) {
-		return !getPlayer( ).isOnLadder( ) && getPlayer( ).onGround && !getPlayer( ).isInWater( )
+		return !getPlayer( ).isOnLadder( )
+				&& getPlayer( ).onGround
+				&& !getPlayer( ).isInWater( )
 				&& !getPlayer( ).isInsideOfMaterial( Material.lava )
-				&& !getPlayer( ).isInsideOfMaterial( Material.vine ) && !getPlayer( ).isSneaking( )
-				&& !getPlayer( ).isAirBorne && getPlayer( ).isEntityAlive( )
-				&& ( getPlayer( ).getFoodStats( ).getFoodLevel( ) > 6 ) && !getPlayer( ).isBlocking( )
-				&& !getPlayer( ).isEating( ) && ( getPlayer( ).moveForward > 0.0F );
+				&& !getPlayer( ).isInsideOfMaterial( Material.vine )
+				&& !getPlayer( ).isSneaking( )
+				&& getPlayer( ).isEntityAlive( )
+				&& ( ( getPlayer( ).getFoodStats( ).getFoodLevel( ) > 6 ) || getPlayer( ).capabilities.isCreativeMode )
+				&& !getPlayer( ).isBlocking( ) && !getPlayer( ).isEating( )
+				&& ( getPlayer( ).moveForward > 0.0F );
 	}
 }

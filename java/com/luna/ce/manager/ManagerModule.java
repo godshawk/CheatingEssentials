@@ -7,6 +7,7 @@ import com.luna.ce.module.Module;
 import com.luna.ce.module.classes.ModuleAdvancedTooltips;
 import com.luna.ce.module.classes.ModuleAnimalESP;
 import com.luna.ce.module.classes.ModuleAntiArrow;
+import com.luna.ce.module.classes.ModuleArrayList;
 import com.luna.ce.module.classes.ModuleAutoRespawn;
 import com.luna.ce.module.classes.ModuleBreadcrumbs;
 import com.luna.ce.module.classes.ModuleChestESP;
@@ -22,6 +23,7 @@ import com.luna.ce.module.classes.ModuleNoWeb;
 import com.luna.ce.module.classes.ModuleReloadChunks;
 import com.luna.ce.module.classes.ModuleSneak;
 import com.luna.ce.module.classes.ModuleSprint;
+import com.luna.ce.module.classes.ModuleStep;
 import com.luna.ce.module.classes.ModuleTest;
 import com.luna.lib.annotations.Experimental;
 import com.luna.lib.annotations.Loadable;
@@ -52,7 +54,8 @@ public class ManagerModule {
 				new ModuleAntiArrow( ), new ModuleAutoRespawn( ), new ModuleAdvancedTooltips( ),
 				new ModuleSprint( ), new ModuleSneak( ), new ModuleJumpStep( ), new ModuleDolphin( ),
 				new ModuleHighJump( ), new ModuleNoWeather( ), new ModuleNoWeb( ), new ModuleReloadChunks( ),
-				new ModuleFullbright( ), new ModuleNoFall( ), new ModuleFastBreak( ), new ModuleBreadcrumbs( ) );
+				new ModuleFullbright( ), new ModuleNoFall( ), new ModuleFastBreak( ),
+				new ModuleBreadcrumbs( ), new ModuleStep( ), new ModuleArrayList( ) );
 	}
 	
 	private void addModules( final Module... modules ) {

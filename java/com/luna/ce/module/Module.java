@@ -1,15 +1,15 @@
 package com.luna.ce.module;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 
 import com.luna.ce.CheatingEssentials;
-import com.luna.ce.manager.ManagerCommand;
 import com.luna.lib.interfaces.Command;
 
 public abstract class Module implements Command {
@@ -49,6 +49,14 @@ public abstract class Module implements Command {
 	
 	public abstract void onWorldTick( );
 	
+	/**
+	 * Not abstract simply because most modules won't use this; only one or two
+	 * will actually find a use for it, and it's a waste to have an empty method
+	 * in EVERY class
+	 */
+	public void onGuiRender( ) {
+	}
+	
 	protected void onDisable( ) {
 	}
 	
@@ -56,20 +64,41 @@ public abstract class Module implements Command {
 	}
 	
 	/**
-	 * When writing a custom onCommand, do NOT forget to call the superclass
-	 * method to avoid having to parse this part on your own!
-	 * {@link ManagerCommand} has some redundancy to help alleviate this, but it
-	 * doesn't hurt to be safe~
-	 * <p>
-	 * <p>
-	 * Module commands are the name of the module with no spaces, ie.
-	 * "Chest Finder" would be "chestfinder"
+	 * Note that the args String[] is passed to subcommand methods UNCHANGED;
+	 * you need to parse it yourself
 	 */
 	@Override
 	public void onCommand( final String[ ] args ) {
-		if( args[ 0 ].toLowerCase( ).equals( getName( ).replaceAll( " ", "" ).toLowerCase( ) ) ) {
-			toggle( );
+		if( args.length == 1 ) {
+			if( args[ 0 ].toLowerCase( ).equals( getName( ).replaceAll( " ", "" ).toLowerCase( ) ) ) {
+				toggle( );
+				return;
+			}
+		} else {
+			if( args[ 1 ].equals( "set" ) ) {
+				setCommand( args );
+				return;
+			}
 		}
+	}
+	
+	private void setCommand( final String[ ] args ) {
+		if( !testArrayItem( args, 2 ) ) {
+			addChatMessage( String.format( "The %sset%s subcommand of %s%s%s requires a parameter!",
+					getChatColor( 'c' ), getChatColor( 'r' ), getChatColor( 'a' ), getName( ),
+					getChatColor( 'r' ) ) );
+		} else {
+			childSetCommand( args );
+		}
+	}
+	
+	protected void childSetCommand( final String[ ] args ) {
+		addChatMessage( String
+				.format( "This is the default %sset%s subcommand for %s%s%s", getChatColor( 'c' ),
+						getChatColor( 'r' ), getChatColor( 'a' ), getName( ), getChatColor( 'r' ) ) );
+		addChatMessage( String.format(
+				"If you are seeing this, this generally means that %s%s%s does not use this subcommand",
+				getChatColor( 'a' ), getName( ), getChatColor( 'r' ) ) );
 	}
 	
 	public void toggle( ) {
@@ -117,7 +146,7 @@ public abstract class Module implements Command {
 		return Minecraft.getMinecraft( );
 	}
 	
-	protected EntityClientPlayerMP getPlayer( ) {
+	protected EntityPlayer getPlayer( ) {
 		return getMinecraft( ).thePlayer;
 	}
 	
@@ -137,8 +166,25 @@ public abstract class Module implements Command {
 		return getMinecraft( ).entityRenderer;
 	}
 	
+	protected FontRenderer getFontRenderer( ) {
+		return getMinecraft( ).fontRenderer;
+	}
+	
 	protected void addChatMessage( final String text ) {
 		getPlayer( ).addChatMessage( new ChatComponentText( String.format( "[CE] %s", text ) ) );
+	}
+	
+	/**
+	 * The "unused" variable is actually used to check if the array index exists
+	 */
+	@SuppressWarnings( "unused" )
+	protected < T > boolean testArrayItem( final T[ ] array, final int index ) {
+		try {
+			final T testItem = array[ index ];
+			return true;
+		} catch( final Exception e ) {
+			return false;
+		}
 	}
 	
 	public String[ ] getHelp( ) {

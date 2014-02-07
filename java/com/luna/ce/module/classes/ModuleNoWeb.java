@@ -6,8 +6,10 @@ import net.minecraft.block.material.Material;
 
 import com.luna.ce.module.EnumModuleType;
 import com.luna.ce.module.Module;
+import com.luna.lib.annotations.Broken;
 
 //@Loadable
+@Broken
 public class ModuleNoWeb extends Module {
 	
 	public ModuleNoWeb( ) {

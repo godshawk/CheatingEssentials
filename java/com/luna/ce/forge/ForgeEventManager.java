@@ -1,6 +1,7 @@
 package com.luna.ce.forge;
 
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.ServerChatEvent;
 
@@ -61,6 +62,17 @@ public class ForgeEventManager {
 	@SubscribeEvent
 	public void onChatSend( final ServerChatEvent ev ) {
 		ManagerCommand.getInstance( ).parseCommands( ev );
+	}
+	
+	@SubscribeEvent
+	public void onGuiRender( final RenderGameOverlayEvent.Post ev ) {
+		if( Minecraft.getMinecraft( ).theWorld != null ) {
+			for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
+				if( e.getActive( ) ) {
+					e.onGuiRender( );
+				}
+			}
+		}
 	}
 	
 	private boolean checkKey( final int key ) {

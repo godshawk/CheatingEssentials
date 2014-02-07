@@ -7,9 +7,10 @@ import net.minecraft.entity.projectile.EntityArrow;
 
 import com.luna.ce.module.EnumModuleType;
 import com.luna.ce.module.Module;
+import com.luna.lib.annotations.Broken;
 
 //@Loadable
-// Doesn't work, find a better way.
+@Broken
 public class ModuleAntiArrow extends Module {
 	
 	public ModuleAntiArrow( ) {
