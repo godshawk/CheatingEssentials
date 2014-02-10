@@ -238,6 +238,7 @@ public abstract class Window {
 	/**
 	 * Organizes the x/y of children, sets child/parent relations.
 	 */
+	@SuppressWarnings( "unused" )
 	private void organizeChildren( ) {
 		int i = 0;
 		int prevy = ( int ) ( ( getY( ) + 14 + 2 + ( getSpacer( ) ? getSpacerHeight( ) + 1 : 0 ) ) - ( ( 14 * componentList
@@ -301,8 +302,8 @@ public abstract class Window {
 			 * 12); }
 			 */
 			
-			if( component.getWidth( ) > magick ) {
-				magick = component.getWidth( );
+			if( ( component.getWidth( ) + 2 ) > magick ) {
+				magick = component.getWidth( ) + 2;
 			}
 		}
 		final int title = getFontRenderer( ).getStringWidth( getText( ) ) + 29;

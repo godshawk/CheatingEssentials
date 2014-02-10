@@ -103,8 +103,8 @@ public class Radar extends Component {
 			GL11.glPopMatrix( );
 		}
 		
-		GuiUtils.drawBorderedRect( getX( ) - 1, getY( ) - 1, getX( ) + getWidth( ) + 2,
-				getY( ) + getHeight( ), 1.5F, 0xaa000000, 0x0 );
+		GuiUtils.drawBorderedRect( getX( ) - 1, getY( ) - 2, getWidth( ) + 4, getHeight( ) + 16, 1.5F,
+				0xaa000000, 0x0 );
 	}
 	
 	@Override

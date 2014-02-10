@@ -7,10 +7,12 @@ import net.minecraftforge.event.ServerChatEvent;
 
 import org.lwjgl.input.Keyboard;
 
+import com.luna.ce.gui.widget.base.Window;
 import com.luna.ce.log.CELogger;
 import com.luna.ce.manager.ManagerCommand;
 import com.luna.ce.manager.ManagerModule;
 import com.luna.ce.module.Module;
+import com.luna.ce.module.classes.ModuleGui;
 import com.luna.lib.loggers.enums.EnumLogType;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -65,13 +67,22 @@ public class ForgeEventManager {
 	}
 	
 	@SubscribeEvent
-	public void onGuiRender( final RenderGameOverlayEvent.Post ev ) {
+	public void onGuiRender( final RenderGameOverlayEvent.Chat ev ) {
 		if( Minecraft.getMinecraft( ).theWorld != null ) {
 			if( Minecraft.getMinecraft( ).currentScreen == null ) {
 				for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
 					if( e.getActive( ) ) {
 						e.onGuiRender( );
 					}
+				}
+				for( final Window e : ManagerModule.getInstance( ).getModuleByClass( ModuleGui.class )
+						.getGui( ).getWindows( ) ) {
+					// if( e.getVisible( ) ) {
+					if( e.getPinned( ) ) {
+						// final Point p = calculateMouseLocation( );
+						e.drawWindow( 0, 0 );
+					}
+					// }
 				}
 			}
 		}

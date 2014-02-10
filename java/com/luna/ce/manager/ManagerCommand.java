@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.event.ServerChatEvent;
 
+import org.lwjgl.input.Keyboard;
+
 import com.luna.ce.CheatingEssentials;
 import com.luna.ce.log.CELogger;
 import com.luna.ce.module.Module;
@@ -80,6 +82,45 @@ public class ManagerCommand {
 								.getInstance( ).getChatColor( 'c' ), args[ 1 ], CheatingEssentials
 								.getInstance( ).getChatColor( 'r' ) ) );
 					}
+				}
+				return true;
+			case "bind":
+				if( args.length < 2 ) {
+					addChatMessage( String.format( "Sorry, but %sbind%s requires more arguments!",
+							CheatingEssentials.getInstance( ).getChatColor( 'c' ), CheatingEssentials
+									.getInstance( ).getChatColor( 'r' ) ), String.format(
+							"Usage: %sbind%s %s<module> [key]%s", CheatingEssentials.getInstance( )
+									.getChatColor( 'c' ), CheatingEssentials.getInstance( )
+									.getChatColor( 'r' ), CheatingEssentials.getInstance( )
+									.getChatColor( 'a' ), CheatingEssentials.getInstance( )
+									.getChatColor( 'r' ) ),
+							"Hint: Modules that have spaces in their name are used here as one word" );
+					return true;
+				} else if( args.length == 2 ) {
+					final Module m = ManagerModule.getInstance( ).getModuleByName( args[ 1 ] );
+					String suchKey = "";
+					try {
+						suchKey = Keyboard.getKeyName( m.getKey( ) );
+					} catch( final Exception e ) {
+						suchKey = "NONE";
+					}
+					addChatMessage( String.format( "Current key for %s%s%s: %s%s%s", CheatingEssentials
+							.getInstance( ).getChatColor( 'c' ), m.getName( ), CheatingEssentials
+							.getInstance( ).getChatColor( 'r' ), CheatingEssentials.getInstance( )
+							.getChatColor( 'a' ), suchKey,
+							CheatingEssentials.getInstance( ).getChatColor( 'r' ) ) );
+				} else if( args.length == 3 ) {
+					final Module m = ManagerModule.getInstance( ).getModuleByName( args[ 1 ] );
+					m.setKey( Keyboard.getKeyIndex( args[ 2 ] ) );
+					addChatMessage( String.format( "Bound %s%s%s to %s%s%s", CheatingEssentials.getInstance( )
+							.getChatColor( 'c' ), m.getName( ), CheatingEssentials.getInstance( )
+							.getChatColor( 'r' ), CheatingEssentials.getInstance( ).getChatColor( 'a' ),
+							Keyboard.getKeyName( m.getKey( ) ), CheatingEssentials.getInstance( )
+									.getChatColor( 'r' ) ) );
+				} else {
+					addChatMessage( String.format( "Too many arguments for %sbind%s!" ), CheatingEssentials
+							.getInstance( ).getChatColor( 'c' ), CheatingEssentials.getInstance( )
+							.getChatColor( 'r' ) );
 				}
 				return true;
 			default:

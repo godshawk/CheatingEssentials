@@ -24,7 +24,6 @@ import com.luna.ce.module.classes.ModuleMobESP;
 import com.luna.ce.module.classes.ModuleNoFall;
 import com.luna.ce.module.classes.ModuleNoWeather;
 import com.luna.ce.module.classes.ModuleNoWeb;
-import com.luna.ce.module.classes.ModuleRearview;
 import com.luna.ce.module.classes.ModuleReloadChunks;
 import com.luna.ce.module.classes.ModuleSneak;
 import com.luna.ce.module.classes.ModuleSprint;
@@ -62,7 +61,7 @@ public class ManagerModule {
 				new ModuleHighJump( ), new ModuleNoWeather( ), new ModuleNoWeb( ), new ModuleReloadChunks( ),
 				new ModuleFullbright( ), new ModuleNoFall( ), new ModuleFastBreak( ),
 				new ModuleBreadcrumbs( ), new ModuleStep( ), new ModuleArrayList( ),
-				new ModuleBlockOverlay( ), new ModuleRearview( ), new ModuleGui( ), new ModuleFly( ) );
+				new ModuleBlockOverlay( ), new ModuleGui( ), new ModuleFly( ) );
 	}
 	
 	private void addModules( final Module... modules ) {
@@ -150,6 +149,20 @@ public class ManagerModule {
 		}
 		CELogger.getInstance( ).log( EnumLogType.WARNING,
 				String.format( "Module %s not found by class, returning null!", c.getCanonicalName( ) ) );
+		return null;
+	}
+	
+	@SuppressWarnings( "unchecked" )
+	public < T extends Module > T getModuleByName( final String name ) {
+		synchronized( modules ) {
+			for( final Module e : modules ) {
+				if( e.getName( ).replaceAll( " ", "" ).toLowerCase( ).equals( name.toLowerCase( ) ) ) {
+					return ( T ) e;
+				}
+			}
+		}
+		CELogger.getInstance( ).log( EnumLogType.WARNING,
+				String.format( "Module %s not found by class, returning null!", name ) );
 		return null;
 	}
 	
