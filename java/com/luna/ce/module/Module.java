@@ -110,6 +110,9 @@ public abstract class Module implements Command {
 		}
 	}
 	
+	public void initializeLater( ) {
+	}
+	
 	public boolean getActive( ) {
 		return active;
 	}

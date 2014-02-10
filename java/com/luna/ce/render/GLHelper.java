@@ -2,6 +2,7 @@ package com.luna.ce.render;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.AxisAlignedBB;
 
 import org.lwjgl.opengl.GL11;
@@ -65,95 +66,161 @@ public final class GLHelper {
 	public static void drawBoundingBox( final AxisAlignedBB axisalignedbb ) {
 		final Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads( ); // starts x
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.maxZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
 		tessellator.draw( );
 		tessellator.startDrawingQuads( );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
 		tessellator.draw( ); // ends x
 		tessellator.startDrawingQuads( ); // starts y
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.minZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
 		tessellator.draw( );
 		tessellator.startDrawingQuads( );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
 		tessellator.draw( ); // ends y
 		tessellator.startDrawingQuads( ); // starts z
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.minZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
 		tessellator.draw( );
 		tessellator.startDrawingQuads( );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.maxY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.minX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.minZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.maxY, axisalignedbb.maxZ );
-		tessellator.addVertex( axisalignedbb.maxX, axisalignedbb.minY, axisalignedbb.maxZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		tessellator.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
 		tessellator.draw( ); // ends z
 	}
 	
 	/**
 	 * Draws lines for the edges of the bounding box.
 	 */
-	public static void drawOutlinedBoundingBox( final AxisAlignedBB par1AxisAlignedBB ) {
+	public static void drawOutlinedBoundingBox( final AxisAlignedBB axisalignedbb ) {
 		final Tessellator var2 = Tessellator.instance;
 		var2.startDrawing( 3 );
-		var2.addVertex( par1AxisAlignedBB.minX, par1AxisAlignedBB.minY, par1AxisAlignedBB.minZ );
-		var2.addVertex( par1AxisAlignedBB.maxX, par1AxisAlignedBB.minY, par1AxisAlignedBB.minZ );
-		var2.addVertex( par1AxisAlignedBB.maxX, par1AxisAlignedBB.minY, par1AxisAlignedBB.maxZ );
-		var2.addVertex( par1AxisAlignedBB.minX, par1AxisAlignedBB.minY, par1AxisAlignedBB.maxZ );
-		var2.addVertex( par1AxisAlignedBB.minX, par1AxisAlignedBB.minY, par1AxisAlignedBB.minZ );
+		var2.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
 		var2.draw( );
 		var2.startDrawing( 3 );
-		var2.addVertex( par1AxisAlignedBB.minX, par1AxisAlignedBB.maxY, par1AxisAlignedBB.minZ );
-		var2.addVertex( par1AxisAlignedBB.maxX, par1AxisAlignedBB.maxY, par1AxisAlignedBB.minZ );
-		var2.addVertex( par1AxisAlignedBB.maxX, par1AxisAlignedBB.maxY, par1AxisAlignedBB.maxZ );
-		var2.addVertex( par1AxisAlignedBB.minX, par1AxisAlignedBB.maxY, par1AxisAlignedBB.maxZ );
-		var2.addVertex( par1AxisAlignedBB.minX, par1AxisAlignedBB.maxY, par1AxisAlignedBB.minZ );
+		var2.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
 		var2.draw( );
 		var2.startDrawing( 1 );
-		var2.addVertex( par1AxisAlignedBB.minX, par1AxisAlignedBB.minY, par1AxisAlignedBB.minZ );
-		var2.addVertex( par1AxisAlignedBB.minX, par1AxisAlignedBB.maxY, par1AxisAlignedBB.minZ );
-		var2.addVertex( par1AxisAlignedBB.maxX, par1AxisAlignedBB.minY, par1AxisAlignedBB.minZ );
-		var2.addVertex( par1AxisAlignedBB.maxX, par1AxisAlignedBB.maxY, par1AxisAlignedBB.minZ );
-		var2.addVertex( par1AxisAlignedBB.maxX, par1AxisAlignedBB.minY, par1AxisAlignedBB.maxZ );
-		var2.addVertex( par1AxisAlignedBB.maxX, par1AxisAlignedBB.maxY, par1AxisAlignedBB.maxZ );
-		var2.addVertex( par1AxisAlignedBB.minX, par1AxisAlignedBB.minY, par1AxisAlignedBB.maxZ );
-		var2.addVertex( par1AxisAlignedBB.minX, par1AxisAlignedBB.maxY, par1AxisAlignedBB.maxZ );
+		var2.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.minZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.maxX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.minY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
+		var2.addVertex( axisalignedbb.minX - RenderManager.renderPosX, axisalignedbb.maxY
+				- RenderManager.renderPosY, axisalignedbb.maxZ - RenderManager.renderPosZ );
 		var2.draw( );
 	}
 }

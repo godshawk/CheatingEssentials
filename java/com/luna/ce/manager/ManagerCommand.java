@@ -60,13 +60,20 @@ public class ManagerCommand {
 							.getChatColor( 'r' ) ) );
 				} else {
 					String[ ] halp = new String[ ] { };
+					Module beingHelped = null;
 					for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
 						if( e.getName( ).replaceAll( " ", "" ).toLowerCase( )
-								.equals( args[ 0 ].toLowerCase( ) ) ) {
+								.equals( args[ 1 ].toLowerCase( ) ) ) {
 							halp = e.getHelp( );
+							beingHelped = e;
 						}
 					}
 					if( halp.length > 0 ) {
+						for( int i = 0; i < halp.length; i++ ) {
+							halp[ i ] = String.format( "[%s%s%s] %s", CheatingEssentials.getInstance( )
+									.getChatColor( 'a' ), beingHelped.getName( ), CheatingEssentials
+									.getInstance( ).getChatColor( 'r' ), halp[ i ] );
+						}
 						addChatMessage( halp );
 					} else {
 						addChatMessage( String.format( "Unknown module: %s%s%s!", CheatingEssentials
@@ -82,7 +89,8 @@ public class ManagerCommand {
 	
 	private void addChatMessage( final String... message ) {
 		for( final String e : message ) {
-			Minecraft.getMinecraft( ).thePlayer.addChatMessage( new ChatComponentText( e ) );
+			Minecraft.getMinecraft( ).thePlayer.addChatMessage( new ChatComponentText( String.format(
+					"[CE] %s", e ) ) );
 		}
 	}
 }

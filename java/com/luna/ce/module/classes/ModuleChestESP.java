@@ -2,7 +2,6 @@ package com.luna.ce.module.classes;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
@@ -31,10 +30,9 @@ public class ModuleChestESP extends Module {
 				final int tz = e.zCoord;
 				
 				if( getWorld( ).blockExists( tx, ty, tz ) ) {
-					GLHelper.drawESP( AxisAlignedBB.getBoundingBox( tx - RenderManager.renderPosX, ty
-							- RenderManager.renderPosY, tz - RenderManager.renderPosZ,
-							( tx - RenderManager.renderPosX ) + 1, ( ty - RenderManager.renderPosY ) + 1,
-							( tz - RenderManager.renderPosZ ) + 1 ), 0.1, 0.7, 0.7 );
+					GLHelper.drawESP(
+							AxisAlignedBB.getBoundingBox( tx, ty, tz, ( tx ) + 1, ( ty ) + 1, ( tz ) + 1 ),
+							0.1, 0.7, 0.7 );
 				}
 			}
 		}

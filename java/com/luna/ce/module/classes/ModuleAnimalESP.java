@@ -2,7 +2,6 @@ package com.luna.ce.module.classes;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.util.AxisAlignedBB;
@@ -25,12 +24,9 @@ public class ModuleAnimalESP extends Module {
 	public void onWorldRender( ) {
 		for( final Entity e : ( List< Entity > ) getWorld( ).getLoadedEntityList( ) ) {
 			final float halfWidth = e.width / 2.0F;
-			final AxisAlignedBB bb = AxisAlignedBB.getAABBPool( ).getAABB(
-					e.posX - halfWidth - RenderManager.renderPosX, e.posY - RenderManager.renderPosY,
-					e.posZ - halfWidth - RenderManager.renderPosZ,
-					( e.posX + halfWidth ) - RenderManager.renderPosX,
-					( e.posY + e.height ) - RenderManager.renderPosY,
-					( e.posZ + halfWidth ) - RenderManager.renderPosZ );
+			final AxisAlignedBB bb = AxisAlignedBB.getAABBPool( )
+					.getAABB( e.posX - halfWidth, e.posY, e.posZ - halfWidth, ( e.posX + halfWidth ),
+							( e.posY + e.height ), ( e.posZ + halfWidth ) );
 			
 			if( ( e instanceof EntityAnimal ) ) {
 				GLHelper.drawESP( bb, 0.1, 0.7, 0.1 );

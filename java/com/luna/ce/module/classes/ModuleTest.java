@@ -16,11 +16,13 @@ public class ModuleTest extends Module {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@SuppressWarnings( "deprecation" )
 	@Override
 	protected void onEnable( ) {
 		addChatMessage( String.format( "%sTest module enabled!%s", getChatColor( 'a' ), getChatColor( 'r' ) ) );
 	}
 	
+	@SuppressWarnings( "deprecation" )
 	@Override
 	protected void onDisable( ) {
 		addChatMessage( String.format( "%sTest module disabled!%s", getChatColor( 'c' ), getChatColor( 'r' ) ) );

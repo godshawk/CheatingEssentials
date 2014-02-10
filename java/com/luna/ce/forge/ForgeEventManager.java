@@ -67,9 +67,11 @@ public class ForgeEventManager {
 	@SubscribeEvent
 	public void onGuiRender( final RenderGameOverlayEvent.Post ev ) {
 		if( Minecraft.getMinecraft( ).theWorld != null ) {
-			for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
-				if( e.getActive( ) ) {
-					e.onGuiRender( );
+			if( Minecraft.getMinecraft( ).currentScreen == null ) {
+				for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
+					if( e.getActive( ) ) {
+						e.onGuiRender( );
+					}
 				}
 			}
 		}

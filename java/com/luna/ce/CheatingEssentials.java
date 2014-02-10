@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import net.minecraftforge.common.MinecraftForge;
 
+import com.luna.ce.api.APIModuleSetup;
 import com.luna.ce.forge.ForgeEventManager;
 import com.luna.ce.log.CELogger;
 import com.luna.ce.manager.ManagerModule;
@@ -53,10 +54,14 @@ public class CheatingEssentials {
 	}
 	
 	private void ceInit( ) {
+		CELogger.getInstance( ).log( "Loading modules..." );
 		ManagerModule.getInstance( );
+		CELogger.getInstance( ).log( "Registering Forge event stuff..." );
 		eventManager = new ForgeEventManager( );
 		FMLCommonHandler.instance( ).bus( ).register( eventManager );
 		MinecraftForge.EVENT_BUS.register( eventManager );
+		CELogger.getInstance( ).log( "Setting up modules that need setting up..." );
+		APIModuleSetup.setupModules( );
 	}
 	
 	public static CheatingEssentials getInstance( ) {
