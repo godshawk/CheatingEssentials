@@ -1,13 +1,17 @@
 package com.luna.ce;
 
+import java.io.File;
 import java.util.Arrays;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.luna.ce.api.APIModuleSetup;
+import com.luna.ce.config.Config;
 import com.luna.ce.forge.ForgeEventManager;
 import com.luna.ce.log.CELogger;
 import com.luna.ce.manager.ManagerModule;
+import com.luna.lib.loggers.enums.EnumLogType;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -29,6 +33,11 @@ public class CheatingEssentials {
 	private static CheatingEssentials	instance;
 	
 	private ForgeEventManager			eventManager;
+	
+	private final File					ceDataDir		= new File( String.format(
+																"%s%scheatingessentials%s",
+																Minecraft.getMinecraft( ).mcDataDir,
+																File.separator, File.separator ) );
 	
 	@EventHandler
 	public void onPreInitialization( final FMLPreInitializationEvent event ) {
@@ -62,6 +71,8 @@ public class CheatingEssentials {
 		MinecraftForge.EVENT_BUS.register( eventManager );
 		CELogger.getInstance( ).log( "Setting up modules that need setting up..." );
 		APIModuleSetup.setupModules( );
+		CELogger.getInstance( ).log( "Loading config..." );
+		Config.getInstance( );
 	}
 	
 	public static CheatingEssentials getInstance( ) {
@@ -74,6 +85,20 @@ public class CheatingEssentials {
 	
 	public void setCommandPrefix( final String newp ) {
 		commandPrefix = newp;
+	}
+	
+	public File getDataDir( ) {
+		if( !ceDataDir.exists( ) ) {
+			if( ceDataDir.mkdirs( ) ) {
+				return ceDataDir;
+			} else {
+				CELogger.getInstance( ).log( EnumLogType.FATAL,
+						"Could not create the CheatingEssentials data directory!" );
+				CELogger.getInstance( ).log( EnumLogType.FATAL, "Shutting down..." );
+				Minecraft.getMinecraft( ).shutdown( );
+			}
+		}
+		return ceDataDir;
 	}
 	
 	public String getChatColor( final char col ) {

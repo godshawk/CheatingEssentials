@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 
 import com.luna.ce.CheatingEssentials;
+import com.luna.ce.config.Config;
 import com.luna.lib.interfaces.Command;
 
 public abstract class Module implements Command {
@@ -107,6 +108,9 @@ public abstract class Module implements Command {
 			onEnable( );
 		} else {
 			onDisable( );
+		}
+		if( getWorld( ) != null ) {
+			Config.getInstance( ).saveModuleConfig( );
 		}
 	}
 	
