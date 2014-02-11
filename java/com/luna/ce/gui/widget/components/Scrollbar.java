@@ -1,7 +1,6 @@
 package com.luna.ce.gui.widget.components;
 
 import java.awt.Point;
-import java.text.DecimalFormat;
 
 import org.lwjgl.input.Mouse;
 
@@ -32,8 +31,6 @@ public class Scrollbar extends Component {
 		setHeight( getParent( ).getWindowHeight( ) + getWidth( )
 				+ ( getParent( ).getSpacer( ) ? 0 : -getParent( ).getSpacerHeight( ) ) );
 		
-		final DecimalFormat df = new DecimalFormat( "###0.00" );
-		curval = Float.parseFloat( df.format( curval ) );
 		skin.drawSlider( getX( ), getY( ), getWidth( ), getHeight( ) + ( getWidth( ) / 2 ), false );
 		float sx = ( getY( ) + ( ( curval ) * getHeight( ) ) ) - ( getWidth( ) / 2 );
 		float sxw = getWidth( );
