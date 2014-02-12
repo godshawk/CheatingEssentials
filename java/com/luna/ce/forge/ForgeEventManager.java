@@ -21,10 +21,6 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 public class ForgeEventManager {
 	private final boolean[ ]	keyStates	= new boolean[ 256 ];
 	
-	public ForgeEventManager( ) {
-		CELogger.getInstance( ).log( "Setting up Forge event stuff..." );
-	}
-	
 	@SubscribeEvent
 	public void onServerTick( final TickEvent.ServerTickEvent ev ) {
 		if( Minecraft.getMinecraft( ).theWorld != null ) {

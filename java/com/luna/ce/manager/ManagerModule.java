@@ -156,7 +156,8 @@ public class ManagerModule {
 	public < T extends Module > T getModuleByName( final String name ) {
 		synchronized( modules ) {
 			for( final Module e : modules ) {
-				if( e.getName( ).replaceAll( " ", "" ).toLowerCase( ).equals( name.toLowerCase( ) ) ) {
+				if( e.getName( ).replaceAll( " ", "" ).toLowerCase( )
+						.equals( name.toLowerCase( ).replaceAll( " ", "" ) ) ) {
 					return ( T ) e;
 				}
 			}

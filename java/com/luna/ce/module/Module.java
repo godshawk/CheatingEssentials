@@ -21,7 +21,7 @@ public abstract class Module implements Command {
 	private final EnumModuleType	type;
 	
 	private String[ ]				help	= new String[ ] {
-			"Default help.", "Probably shouldn't be seeing this."
+			"Default help.", "Definitely shouldn't be seeing this."
 											};
 	
 	private boolean					active	= false;
@@ -42,7 +42,7 @@ public abstract class Module implements Command {
 		this.key = key;
 		this.type = type;
 		help = new String[ ] {
-			desc
+				desc, String.format( "Usage: %s", name.toLowerCase( ).replaceAll( " ", "" ) )
 		};
 	}
 	
@@ -125,6 +125,7 @@ public abstract class Module implements Command {
 		this.active = active;
 	}
 	
+	@Override
 	public String getName( ) {
 		return name;
 	}

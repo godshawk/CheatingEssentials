@@ -288,39 +288,39 @@ public abstract class Window {
 			}
 		}
 		
-		// if( getShouldResize( ) ) {
-		int magick = 0;
-		
-		for( final Component component : componentList ) {
-			if( component instanceof Scrollbar ) {
-				magick += 8;
-				continue;
-			}
-			/*
-			 * if (getWidth() < (component.getWidth() + 12) || getWidth() >
-			 * (component.getWidth() + 12)) { setWidth(component.getWidth() +
-			 * 12); }
-			 */
+		if( getShouldResize( ) ) {
+			int magick = 0;
 			
-			if( ( component.getWidth( ) + 2 ) > magick ) {
-				magick = component.getWidth( ) + 2;
+			for( final Component component : componentList ) {
+				if( component instanceof Scrollbar ) {
+					magick += 8;
+					continue;
+				}
+				/*
+				 * if (getWidth() < (component.getWidth() + 12) || getWidth() >
+				 * (component.getWidth() + 12)) { setWidth(component.getWidth()
+				 * + 12); }
+				 */
+				
+				if( ( component.getWidth( ) + 2 ) > magick ) {
+					magick = component.getWidth( ) + 2;
+				}
+			}
+			final int title = getFontRenderer( ).getStringWidth( getText( ) ) + 29;
+			if( magick < title ) {
+				magick = title;
+			} else {
+				magick += 4;
+			}
+			setWidth( magick );
+			
+			if( getScrollbarExists( ) ) {
+				if( !ghettoResizeFix ) {
+					ghettoResizeFix = true;
+					setWidth( getWidth( ) + 10 );
+				}
 			}
 		}
-		final int title = getFontRenderer( ).getStringWidth( getText( ) ) + 29;
-		if( magick < title ) {
-			magick = title;
-		} else {
-			magick += 4;
-		}
-		setWidth( magick );
-		
-		if( getScrollbarExists( ) ) {
-			if( !ghettoResizeFix ) {
-				ghettoResizeFix = true;
-				setWidth( getWidth( ) + 10 );
-			}
-		}
-		// }
 		
 		/*
 		 * if (getWidth_TB() < ((((HookFontRenderer)

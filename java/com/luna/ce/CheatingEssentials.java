@@ -10,6 +10,7 @@ import com.luna.ce.api.APIModuleSetup;
 import com.luna.ce.config.Config;
 import com.luna.ce.forge.ForgeEventManager;
 import com.luna.ce.log.CELogger;
+import com.luna.ce.manager.ManagerCommand;
 import com.luna.ce.manager.ManagerModule;
 import com.luna.lib.loggers.enums.EnumLogType;
 
@@ -23,9 +24,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod( modid = CheatingEssentials.MODID, name = CheatingEssentials.NAME, version = CheatingEssentials.VERSION, canBeDeactivated = true )
 public class CheatingEssentials {
-	public static final String			MODID			= "cheatingessentials";
-	public static final String			VERSION			= "1.0.0";
-	public static final String			NAME			= "CheatingEssentials";
+	static final String					MODID			= "cheatingessentials";
+	static final String					VERSION			= "1.1.0";
+	static final String					NAME			= "CheatingEssentials";
+	
+	static final String					RELEASE			= "Muffin";
 	
 	private String						commandPrefix	= ":";
 	
@@ -54,10 +57,10 @@ public class CheatingEssentials {
 	
 	@EventHandler
 	public void init( final FMLInitializationEvent event ) {
-		CELogger.getInstance( ).log( String.format( "Starting up %s v%s...", NAME, VERSION ) );
+		CELogger.getInstance( ).log( String.format( "Starting up %s v%s (5s)...", NAME, VERSION, RELEASE ) );
 		CELogger.getInstance( ).log(
-				String.format( "Running %s in Minecraft \"%s\", Forge \"%s\"", NAME,
-						MinecraftForge.MC_VERSION, MinecraftForge.getBrandingVersion( ) ) );
+				String.format( "Running in Minecraft \"%s\", Forge \"%s\"", MinecraftForge.MC_VERSION,
+						MinecraftForge.getBrandingVersion( ) ) );
 		instance = new CheatingEssentials( );
 		ceInit( );
 	}
@@ -71,6 +74,8 @@ public class CheatingEssentials {
 		MinecraftForge.EVENT_BUS.register( eventManager );
 		CELogger.getInstance( ).log( "Setting up modules that need setting up..." );
 		APIModuleSetup.setupModules( );
+		CELogger.getInstance( ).log( "Loading commands..." );
+		ManagerCommand.getInstance( );
 		CELogger.getInstance( ).log( "Loading config..." );
 		Config.getInstance( );
 	}

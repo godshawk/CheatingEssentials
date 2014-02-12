@@ -10,9 +10,6 @@ public class KeyButton extends Button {
 	
 	private final Module	module;
 	
-	/**
-	 * Doesn't need to be declared false but yolo
-	 */
 	private boolean			enabled	= false;
 	
 	public KeyButton( final Module m ) {
@@ -22,11 +19,10 @@ public class KeyButton extends Button {
 	
 	@Override
 	public void draw( final Window window, final ISkin skin, final int mouseX, final int mouseY ) {
-		skin.drawButton( getX( ), getY( ), getX( ) + getWidth( ), getY( ) + getHeight( ), enabled );
+		skin.drawButton( getX( ), getY( ), getWidth( ), getHeight( ), enabled );
 		setText( ( enabled ? "\u00a7a" : "\u00a7r" ) + module.getName( ) + " - "
 				+ ( module.getKey( ) > 0 ? Keyboard.getKeyName( module.getKey( ) ) : "???" ) );
-		// setWidth(((HookFontRenderer)
-		// getFontRenderer()).stringCache.getStringWidth(getText()) + 5);
+		setWidth( getFontRenderer( ).getStringWidth( getText( ) ) + 5 );
 		getFontRenderer( ).drawString( getText( ), getX( ) + 3, getY( ) + 3, skin.getTextColor( false ) );
 	}
 	

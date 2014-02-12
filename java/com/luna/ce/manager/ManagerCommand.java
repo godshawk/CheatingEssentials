@@ -1,5 +1,8 @@
 package com.luna.ce.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.event.ServerChatEvent;
@@ -7,15 +10,23 @@ import net.minecraftforge.event.ServerChatEvent;
 import org.lwjgl.input.Keyboard;
 
 import com.luna.ce.CheatingEssentials;
-import com.luna.ce.log.CELogger;
+import com.luna.ce.commands.ACommand;
+import com.luna.ce.commands.CommandHelp;
 import com.luna.ce.module.Module;
-import com.luna.lib.loggers.enums.EnumLogType;
+import com.luna.lib.interfaces.Command;
 
 public class ManagerCommand {
-	private static ManagerCommand	instance;
+	private static ManagerCommand		instance;
+	
+	private final ArrayList< Command >	commands;
 	
 	public ManagerCommand( ) {
-		
+		commands = new ArrayList<>( );
+		for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
+			commands.add( e );
+		}
+		// And now we come to the annoying part!
+		commands.add( new CommandHelp( ) );
 	}
 	
 	public static ManagerCommand getInstance( ) {
@@ -38,19 +49,32 @@ public class ManagerCommand {
 			return;
 		}
 		
-		for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
+		// @formatter:off
+		/*for( final Module e : ManagerModule.getInstance( ).getModules( ) ) {
 			CELogger.getInstance( ).log( EnumLogType.DEBUG,
 					"Name: " + e.getName( ).replaceAll( " ", "" ).toLowerCase( ) + ", args[0]: " + args[ 0 ] );
 			if( args[ 0 ].toLowerCase( ).equals( e.getName( ).replaceAll( " ", "" ).toLowerCase( ) ) ) {
 				e.onCommand( args );
 				return;
 			}
+		}*/
+		// @formatter:on
+		
+		for( final Command e : commands ) {
+			if( e.getName( ).toLowerCase( ).replaceAll( " ", "" ).equals( args[ 0 ].toLowerCase( ) ) ) {
+				e.onCommand( args );
+				return;
+			}
 		}
 	}
 	
+	/**
+	 * This method is a perversion of all that is good and holy.
+	 */
 	private boolean parseEmbeddedCommands( final String[ ] args ) {
-		switch( args[ 0 ] ) {
-			case "help":
+		switch( args[ 0 ].toLowerCase( ) ) {
+		// @formatter:off
+			/*case "help":
 				if( args.length == 1 ) {
 					addChatMessage( String.format(
 							"Sorry, but a generic %shelp%s command is not supported yet :(",
@@ -83,7 +107,8 @@ public class ManagerCommand {
 								.getInstance( ).getChatColor( 'r' ) ) );
 					}
 				}
-				return true;
+				return true;*/
+				// @formatter:on
 			case "bind":
 				if( args.length < 2 ) {
 					addChatMessage( String.format( "Sorry, but %sbind%s requires more arguments!",
@@ -123,6 +148,22 @@ public class ManagerCommand {
 							.getChatColor( 'r' ) );
 				}
 				return true;
+			case "prefix":
+				if( args.length == 1 ) {
+					addChatMessage( String.format( "Current prefix: %s%s%s", CheatingEssentials.getInstance( )
+							.getChatColor( 'c' ), CheatingEssentials.getInstance( ).getCommandPrefix( ),
+							CheatingEssentials.getInstance( ).getChatColor( 'r' ) ) );
+				} else if( args.length == 2 ) {
+					CheatingEssentials.getInstance( ).setCommandPrefix( args[ 1 ] );
+					addChatMessage( String.format( "Prefix changed to %s%s%s!", CheatingEssentials
+							.getInstance( ).getChatColor( 'c' ), CheatingEssentials.getInstance( )
+							.getCommandPrefix( ), CheatingEssentials.getInstance( ).getChatColor( 'r' ) ) );
+				} else {
+					addChatMessage( String.format( "Too many arguments for %sprefix%s!" ), CheatingEssentials
+							.getInstance( ).getChatColor( 'c' ), CheatingEssentials.getInstance( )
+							.getChatColor( 'r' ) );
+				}
+				return true;
 			default:
 				return false;
 		}
@@ -133,5 +174,33 @@ public class ManagerCommand {
 			Minecraft.getMinecraft( ).thePlayer.addChatMessage( new ChatComponentText( String.format(
 					"[CE] %s", e ) ) );
 		}
+	}
+	
+	public List< String > dumpCommands( ) {
+		// Will change this behavior later
+		final List< String > commands = new ArrayList<>( );
+		for( final Command c : this.commands ) {
+			String cmd = c.toString( );
+			if( c instanceof Module ) {
+				final Module e = ( Module ) c;
+				cmd = String.format( "%s: %s", e.getName( ), findUsage( e ) );
+			}
+			if( c instanceof ACommand ) {
+				cmd = ( ( ACommand ) c ).getSyntax( );
+			}
+			commands.add( cmd );
+		}
+		commands.add( "Bind: bind <module> [key]" );
+		commands.add( "Prefix: prefix [new]" );
+		return commands;
+	}
+	
+	private String findUsage( final Module e ) {
+		for( final String s : e.getHelp( ) ) {
+			if( s.startsWith( "" ) ) {
+				return s;
+			}
+		}
+		return e.toString( );
 	}
 }

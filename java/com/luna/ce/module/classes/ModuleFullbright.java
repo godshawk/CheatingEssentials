@@ -17,7 +17,7 @@ public class ModuleFullbright extends Module {
 	
 	@Override
 	public void onWorldRender( ) {
-		getPlayer( ).addPotionEffect( new PotionEffect( Potion.nightVision.getId( ), 999999, 255 ) );
+		getPlayer( ).addPotionEffect( new PotionEffect( Potion.nightVision.getId( ), 999999999, 255 ) );
 	}
 	
 	@Override

@@ -8,12 +8,12 @@ public class CELogger extends AbstractLogger {
 	
 	@Override
 	public void log( final EnumLogType level, final Object data ) {
-		System.out.println( String.format( "[CheatingEssentials] [%s] %s", level.getName(), data ) );
+		System.out.println( String.format( "[CheatingEssentials] [%s] %s", level.getName( ), data ) );
 	}
 	
-	public static CELogger getInstance() {
+	public static CELogger getInstance( ) {
 		if( instance == null ) {
-			instance = new CELogger();
+			instance = new CELogger( );
 		}
 		return instance;
 	}

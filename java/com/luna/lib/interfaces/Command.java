@@ -6,4 +6,6 @@ package com.luna.lib.interfaces;
  */
 public interface Command {
 	public void onCommand( String[ ] args );
+	
+	public String getName( );
 }
